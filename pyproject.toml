@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "youtube-ai-resume"
+version = "0.0.1"
+description = "CLI & library that extracts YouTube captions and returns an OpenAI-generated summary"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Your Name", email = "you@example.com"}]
+dependencies = [
+  "pytubefix>=2.3",
+  "beautifulsoup4>=4.12",
+  "requests>=2.32",
+  "openai>=1.15",          # official SDK
+  "rich>=13.7",
+  "prompt_toolkit>=3.0"    # optional, used by cli.py
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/youtube_ai_resume"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "build", "twine"]
+
+[project.scripts]
+youtube-ai-resume = "youtube_ai_resume.cli:app"
