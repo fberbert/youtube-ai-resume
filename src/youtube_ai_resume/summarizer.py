@@ -1,8 +1,10 @@
 from __future__ import annotations
 from openai import OpenAI
+from .config import load
 
-DEFAULT_MODEL = "gpt-4.1-mini"
-DEFAULT_OUTPUT_LANG = "pt_BR"
+_cfg = load()
+DEFAULT_MODEL      = _cfg["openai_model"]
+DEFAULT_OUTPUT_LANG = _cfg["output_lang"]
 
 SYSTEM_PROMPT = (
     "You are a professional note-taker. Produce a concise, insightful "
