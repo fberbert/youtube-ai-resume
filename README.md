@@ -11,7 +11,7 @@ It works in two steps:
 <p align="center">
   <img src="https://img.shields.io/pypi/v/youtube-ai-resume?color=brightgreen" alt="PyPI">
   <img src="https://img.shields.io/pypi/pyversions/youtube-ai-resume" alt="Python Version">
-  <img src="https://img.shields.io/github/license/your-user/youtube-ai-resume" alt="License">
+  <img src="https://img.shields.io/github/license/fberbert/youtube-ai-resume" alt="License">
 </p>
 
 ---

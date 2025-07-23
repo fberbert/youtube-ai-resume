@@ -21,6 +21,13 @@ dependencies = [
   "playsound>=1.3",
   "protobuf>=3.20,<4"
 ]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/youtube_ai_resume"]
