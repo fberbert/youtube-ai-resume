@@ -32,7 +32,6 @@ def _client() -> texttospeech.TextToSpeechClient:
     cred_path = os.path.expanduser(_cfg["google_credentials"])
     if os.path.isfile(cred_path):
         return texttospeech.TextToSpeechClient.from_service_account_file(cred_path)
-    # fallback para variáveis de ambiente (GOOGLE_APPLICATION_CREDENTIALS)
     return texttospeech.TextToSpeechClient()
 
 

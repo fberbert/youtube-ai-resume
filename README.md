@@ -1,3 +1,6 @@
+youtube-ai-resume dQw4w9WgXcQ     # Rick Astley demo 😄
+txt = caption.fetch_caption("dQw4w9WgXcQ")
+
 # youtube-ai-resume
 
 **Generate concise AI summaries of YouTube videos from the command line.**  
@@ -31,7 +34,7 @@ It works in two steps:
 pip install youtube-ai-resume
 ```
 
-Or, from source for hacking:
+Or, from source for development:
 
 ```bash
 git clone https://github.com/fberbert/youtube-ai-resume.git
@@ -57,7 +60,7 @@ Summary:
 • Emphasises commitment (“never gonna give you up…”) …
 ```
 
-Library usage
+### Library usage
 
 ```python
 from youtube_ai_resume import caption, summarizer
@@ -71,7 +74,55 @@ summary = summarizer.summarize(
 )
 print(summary)
 ```
+
 ## Configuration
+
+
+## Voice narration (Text-to-Speech) [Optional]
+
+You can optionally have the summary narrated aloud using Google Cloud Text-to-Speech (TTS).
+
+### Optional Requirements (only if you want voice narration)
+
+- A Google Cloud account with the Text-to-Speech API enabled
+- A service account key (JSON) with permission to use TTS
+- The dependencies `google-cloud-texttospeech` and `playsound` (already included in requirements.txt)
+
+### Optional Setup
+
+1. Create a project in Google Cloud and enable the Text-to-Speech API.
+2. Generate and download a service account credentials file (JSON).
+3. Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path of your credentials file:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/service-account.json"
+```
+
+Or authenticate using the Google Cloud CLI (`gcloud`):
+
+```bash
+gcloud auth application-default login
+```
+
+### Usage
+
+- To hear the summary narration, add the `--voice` option to the command:
+
+```bash
+youtube-ai-resume dQw4w9WgXcQ --voice
+```
+
+- To enable narration by default, add to your config.json:
+
+```json
+{
+    "voice_enabled": true
+}
+```
+
+You can customize voice, language, and speed in config.json (see code examples).
+
+---
 
 You can set the OpenAI API key as an environment variable or in a config file.
 
