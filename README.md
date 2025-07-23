@@ -1,9 +1,7 @@
-youtube-ai-resume dQw4w9WgXcQ     # Rick Astley demo 😄
-txt = caption.fetch_caption("dQw4w9WgXcQ")
 
 # youtube-ai-resume
 
-**Generate concise AI summaries of YouTube videos from the command line.**  
+**Generate concise AI summaries of YouTube videos from the command line.**
 It works in two steps:
 
 1. Downloads the video caption (subtitles) with `pytubefix`.
@@ -59,6 +57,36 @@ Summary:
 • Rick distances himself from breaking promises
 • Emphasises commitment (“never gonna give you up…”) …
 ```
+### Command Line Usage
+
+```bash
+export OPENAI_API_KEY="sk-..."
+youtube-ai-resume 'https://www.youtube.com/watch?v=Ht2QW5PV-eY'
+```
+
+Sample output:
+
+```plaintext
+Summary:
+
+The speaker, Dashish, an engineer on OpenAI’s product team, discusses advancements in AI agents that integrate improved models with powerful tools to 
+enhance user experience. Key points include:
+
+- **Symbiotic Improvement**: Better tools enable more capable AI agents, which in turn can utilize more powerful tools, creating a continuous cycle of 
+enhancement.
+- **Agent Capabilities**: The AI agent can access various personal tools and data sources, such as Gmail and Google Calendar, through connectors to perform
+complex tasks.
+- **Use Case - Booking a Tennis Tournament Itinerary**:
+  - The agent is tasked with planning a detailed itinerary for a tennis tournament in Palm Springs, focusing on semi-final dates.
+  - It checks the tournament schedule, the user’s calendar availability, flight options, hotel bookings, match attendance, and dining plans.
+  - The agent uses a visual browser and personal data access to gather and coordinate all necessary information.
+- **User Experience**: The agent automates the research and planning process, handling logistical details like travel time and meeting schedules, then 
+notifies the user with a comprehensive plan to review.
+- **Benefit**: This automation frees users from mundane tasks, allowing them to focus on the core activities they care about.
+
+Overall, the presentation highlights how integrating AI models with personal data and external tools can create intelligent agents that manage complex, 
+personalized planning tasks efficiently.
+```
 
 ### Library usage
 
@@ -70,7 +98,7 @@ summary = summarizer.summarize(
     transcript=txt,
     api_key="sk-…",
     model="gpt-4.1-mini",
-    out_lang="en"
+    out_lang="pt_BR"
 )
 print(summary)
 ```
