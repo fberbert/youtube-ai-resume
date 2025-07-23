@@ -175,3 +175,8 @@ Released under the MIT License – see LICENSE.
 Fabio Berbert <fberbert@gmail.com>
 
 I am open for job opportunities and collaborations.
+
+## References
+
+- [PyPI: youtube-ai-resume](https://pypi.org/project/youtube-ai-resume/)
+- [GitHub: fberbert/youtube-ai-resume](https://github.com/fberbert/youtube-ai-resume)
