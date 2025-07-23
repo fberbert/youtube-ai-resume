@@ -47,7 +47,7 @@ pip install -e ".[dev]"     # editable + dev tools
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-youtube-ai-resume 'https://www.youtube.com/watch?v=Ht2QW5PV-eY'
+youtube-ai-resume https://www.youtube.com/watch?v=Ht2QW5PV-eY
 ```
 
 Sample output:
