@@ -93,9 +93,9 @@ def app() -> None:
     if args.voice or cfg["voice_enabled"]:
         try:
             console.print("\n[green]▶ Reproduzindo narração...[/green]")
-            speak(summary)          # usa voz e rate padrão
+            speak(summary) # default voice and rate
         except Exception as err:
-            console.print(f"[red]Falha na narração: {err}[/red]")
+            console.print(f"[red]Narration failed: {err}[/red]")
 
 if __name__ == "__main__":
     app()

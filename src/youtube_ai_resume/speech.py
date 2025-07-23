@@ -1,5 +1,5 @@
 """
-speech.py – sintetiza e toca uma narração do resumo via Google Cloud TTS.
+speech.py – synthesizes and plays a narration of the summary using Google Cloud TTS.
 """
 
 from __future__ import annotations
@@ -15,17 +15,17 @@ import re
 
 _cfg = load()
 
-# Voz padrão (PT-BR masculina).  Troque conforme necessidade.
-DEFAULT_LANG  = _cfg.get("output_lang", "pt-BR")
-# DEFAULT_VOICE = _cfg.get("google_voice", "pt-BR-Neural2-B")
-DEFAULT_VOICE = _cfg.get("google_voice", "pt-BR-Chirp3-HD-Orus")
+
+# Default voice (male en-US). Change as needed.
+DEFAULT_LANG  = _cfg.get("output_lang", "en_US")
+DEFAULT_VOICE = _cfg.get("google_voice", "en-US-Chirp-HD-D")
 DEFAULT_GENDER = texttospeech.SsmlVoiceGender.MALE
-DEFAULT_RATE   = 1        # 25 % mais rápido
+DEFAULT_RATE   = 1        # 25% faster
 
 _MARKUP = re.compile(r"[*_`~>#\-\[\]\(\)]")
 
 def sanitize(txt: str) -> str:
-    # 1) remove markdown, 2) normaliza espaços
+    # 1) remove markdown, 2) normalize spaces
     return re.sub(r"\s+", " ", _MARKUP.sub("", txt)).strip()
 
 def _client() -> texttospeech.TextToSpeechClient:
@@ -33,6 +33,7 @@ def _client() -> texttospeech.TextToSpeechClient:
     if os.path.isfile(cred_path):
         return texttospeech.TextToSpeechClient.from_service_account_file(cred_path)
     return texttospeech.TextToSpeechClient()
+
 
 
 def speak(
@@ -44,12 +45,12 @@ def speak(
     rate: float = DEFAULT_RATE,
 ) -> pathlib.Path:
     """
-    Sintetiza `text`, grava MP3 num tmp e toca.
-    Retorna o caminho do arquivo gerado.
+    Synthesizes `text`, saves MP3 to a temp file and plays it.
+    Returns the path to the generated file.
     """
     text = sanitize(text)
     if not text.strip():
-        raise ValueError("Texto vazio não pode ser narrado.")
+        raise ValueError("Empty text cannot be narrated.")
 
     client = _client()
 

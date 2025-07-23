@@ -20,10 +20,10 @@ class YAIRConfig(TypedDict, total=False):
 
 DEFAULTS: YAIRConfig = {
     "openai_model": "gpt-4.1-mini",
-    "output_lang": "pt_BR",
+    "output_lang": "en_US",
     "google_credentials": "~/.config/youtube-ai-resume/.google-credentials.json",
     "voice_enabled": False,
-    "default_voice": "pt-BR-Neural2-B",
+    "default_voice": "en-US-Chirp-HD-D"
 }
 
 def _config_dir() -> Path:

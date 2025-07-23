@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "youtube-ai-resume"
-version = "0.0.5"
+version = "0.0.6"
 description = "CLI & library that extracts YouTube captions and returns an OpenAI-generated summary"
 readme = "README.md"
 requires-python = ">=3.9"

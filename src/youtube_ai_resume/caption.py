@@ -1,5 +1,5 @@
 """
-caption.py  –  agora com suporte a legendas auto-geradas.
+captions.py - support for auto-generated captions.
 """
 from __future__ import annotations
 from typing import List
@@ -14,43 +14,43 @@ from youtube_transcript_api import (
 
 def _snippet_to_text(chunk) -> str:
     """
-    Aceita tanto dicts {'text': '...'} quanto FetchedTranscriptSnippet.
+    Accept dicts with 'text' key or objects with .text attribute.
+    Returns the text content of the caption chunk.
     """
     if isinstance(chunk, dict):
         return chunk.get("text", "").strip()
-    # versões recentes da lib retornam objetos com atributo .text
+    # recent versions of the library return objects with .text attribute
     return getattr(chunk, "text", "").strip()
 
 def _best_transcript(video_id: str, pref: list[str] | None) -> str:
     """
-    Retorna texto puro da melhor legenda disponível.
-    Ordem de preferência:
-      1. Manual no idioma desejado (pref)
-      2. Auto-gerada no idioma desejado (pref)
-      3. Qualquer legenda (manual ou auto) existente
+    Returns the plain text of the best available caption.
+    Preference order:
+      1. Manually created caption in the desired language (pref)
+      2. Auto-generated caption in the desired language (pref)
+      3. Any existing caption (manual or auto)
     """
     try:
         transcripts = YouTubeTranscriptApi.list_transcripts(video_id)
 
         transcript = None
-
-        # 1) manual na língua desejada
+        # 1) manually created caption in the desired language
         if pref:
             try:
-                transcript = transcripts.find_manually_created_transcript(pref)
+            transcript = transcripts.find_manually_created_transcript(pref)
             except Exception:
-                pass
+            pass
 
-        # 2) auto-gerada na língua desejada
+        # 2) auto-generated caption in the desired language
         if not transcript and pref:
             try:
-                transcript = transcripts.find_generated_transcript(pref)
+            transcript = transcripts.find_generated_transcript(pref)
             except Exception:
-                pass
+            pass
 
-        # 3) pega a primeira legenda disponível
+        # 3) pick the first available caption
         if not transcript:
-            # gera lista de todos os códigos de idioma disponíveis
+            # generate list of all available language codes
             all_langs = [t.language_code for t in transcripts]
             transcript = transcripts.find_transcript(all_langs)
 
@@ -61,10 +61,10 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
         raise RuntimeError("No captions available for this video.")
 
 
-# ---- API pública -----------------------------------------------------------
+# ---- Public API -----------------------------------------------------------
 
 def list_captions(video_id: str) -> List[str]:
-    """Lista todos os códigos de idioma (manual + auto-gerado) disponíveis."""
+    """List all available caption languages for a video."""
     try:
         tr = YouTubeTranscriptApi.list_transcripts(video_id)
         return [t.language_code for t in tr]

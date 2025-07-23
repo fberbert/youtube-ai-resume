@@ -2,6 +2,7 @@
 # youtube-ai-resume
 
 **Generate concise AI summaries of YouTube videos from the command line.**
+
 It works in two steps:
 
 1. Downloads the video caption (subtitles) with `pytubefix`.
@@ -17,8 +18,8 @@ It works in two steps:
 
 ## Features
 
-* **Zero-setup CLI** → `youtube-ai-resume <video_id>`
-* Summaries in any language (default `pt_BR`)
+* **Zero-setup CLI** → `youtube-ai-resume <video_url>`
+* Summaries in any language (default `en_US`)
 * Works with models like **`gpt-4.1-mini`** (configurable)
 * Rich-formatted output with colours
 * Usable as a *library* (`import youtube_ai_resume`)
@@ -42,21 +43,6 @@ pip install -e ".[dev]"     # editable + dev tools
 
 ## Quick start
 
-### Command Line Usage
-
-```bash
-export OPENAI_API_KEY="sk-..."
-youtube-ai-resume dQw4w9WgXcQ     # Rick Astley demo 😄
-```
-
-Sample output:
-
-```plaintext
-Summary:
-
-• Rick distances himself from breaking promises
-• Emphasises commitment (“never gonna give you up…”) …
-```
 ### Command Line Usage
 
 ```bash
@@ -93,12 +79,12 @@ personalized planning tasks efficiently.
 ```python
 from youtube_ai_resume import caption, summarizer
 
-txt = caption.fetch_caption("dQw4w9WgXcQ")
+txt = caption.fetch_caption("Ht2QW5PV-eY")
 summary = summarizer.summarize(
     transcript=txt,
     api_key="sk-…",
     model="gpt-4.1-mini",
-    out_lang="pt_BR"
+    out_lang="en_US"
 )
 print(summary)
 ```
@@ -112,7 +98,6 @@ You can optionally have the summary narrated aloud using Google Cloud Text-to-Sp
 
 ### Optional Requirements (only if you want voice narration)
 
-- A Google Cloud account with the Text-to-Speech API enabled
 - A service account key (JSON) with permission to use TTS
 - The dependencies `google-cloud-texttospeech` and `playsound` (already included in requirements.txt)
 
@@ -126,10 +111,12 @@ You can optionally have the summary narrated aloud using Google Cloud Text-to-Sp
 export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/service-account.json"
 ```
 
-Or authenticate using the Google Cloud CLI (`gcloud`):
+The default path is `~/.config/youtube-ai-resume/.google-credentials.json`. You can customize this path in your config file.
 
-```bash
-gcloud auth application-default login
+```json
+{
+    "google_credentials": "~/.config/youtube-ai-resume/.google-credentials.json"
+}
 ```
 
 ### Usage
@@ -137,7 +124,7 @@ gcloud auth application-default login
 - To hear the summary narration, add the `--voice` option to the command:
 
 ```bash
-youtube-ai-resume dQw4w9WgXcQ --voice
+youtube-ai-resume --voice 'https://www.youtube.com/watch?v=Ht2QW5PV-eY'
 ```
 
 - To enable narration by default, add to your config.json:
@@ -182,3 +169,9 @@ Describe your change clearly.
 ## License
 
 Released under the MIT License – see LICENSE.
+
+## Author
+
+Fabio Berbert <fberbert@gmail.com>
+
+I am open for job opportunities and collaborations.
