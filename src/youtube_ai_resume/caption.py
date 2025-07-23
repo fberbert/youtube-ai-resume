@@ -37,16 +37,16 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
         # 1) manually created caption in the desired language
         if pref:
             try:
-            transcript = transcripts.find_manually_created_transcript(pref)
+                transcript = transcripts.find_manually_created_transcript(pref)
             except Exception:
-            pass
+                pass
 
         # 2) auto-generated caption in the desired language
         if not transcript and pref:
             try:
-            transcript = transcripts.find_generated_transcript(pref)
+                transcript = transcripts.find_generated_transcript(pref)
             except Exception:
-            pass
+                pass
 
         # 3) pick the first available caption
         if not transcript:
