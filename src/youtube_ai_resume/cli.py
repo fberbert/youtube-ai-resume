@@ -52,13 +52,13 @@ def app() -> None:
     )
     parser.add_argument(
         "-m", "--model",
-        default=cfg["openai_model"],
-        help=f"OpenAI model (default in config: {cfg['openai_model']})"
+        default=cfg.get("openai_model", "gpt-3.5-turbo"),
+        help=f"OpenAI model (default in config: {cfg.get('openai_model', 'gpt-3.5-turbo')})"
     )
     parser.add_argument(
         "-l", "--lang",
-        default=cfg["output_lang"],
-        help=f"Output language (default: {cfg['output_lang']})"
+        default=cfg.get("output_lang", "en"),
+        help=f"Output language (default: {cfg.get('output_lang', 'en')})"
     )
     parser.add_argument(
         "--voice", action="store_true",
@@ -90,7 +90,7 @@ def app() -> None:
     console.print("\n[bold cyan]Summary:[/bold cyan]\n")
     console.print(textwrap.dedent(summary))
 
-    if args.voice or cfg["voice_enabled"]:
+    if args.voice or cfg.get("voice_enabled", False):
         try:
             console.print("\n[green]▶ Reproduzindo narração...[/green]")
             speak(summary) # default voice and rate

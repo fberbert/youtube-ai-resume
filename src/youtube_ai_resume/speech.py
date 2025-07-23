@@ -29,8 +29,8 @@ def sanitize(txt: str) -> str:
     return re.sub(r"\s+", " ", _MARKUP.sub("", txt)).strip()
 
 def _client() -> texttospeech.TextToSpeechClient:
-    cred_path = os.path.expanduser(_cfg["google_credentials"])
-    if os.path.isfile(cred_path):
+    cred_path = os.path.expanduser(_cfg.get("google_credentials", ""))
+    if cred_path and os.path.isfile(cred_path):
         return texttospeech.TextToSpeechClient.from_service_account_file(cred_path)
     return texttospeech.TextToSpeechClient()
 

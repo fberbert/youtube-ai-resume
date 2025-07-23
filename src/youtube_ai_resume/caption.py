@@ -4,12 +4,8 @@ captions.py - support for auto-generated captions.
 from __future__ import annotations
 from typing import List
 
-from youtube_transcript_api import (
-    YouTubeTranscriptApi,
-    NoTranscriptFound,
-    TranscriptsDisabled,
-    VideoUnavailable,
-)
+from youtube_transcript_api._api import YouTubeTranscriptApi
+from youtube_transcript_api._errors import NoTranscriptFound, TranscriptsDisabled, VideoUnavailable
 
 
 def _snippet_to_text(chunk) -> str:
@@ -31,8 +27,8 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
       3. Any existing caption (manual or auto)
     """
     try:
-        transcripts = YouTubeTranscriptApi.list_transcripts(video_id)
-
+        transcripts = YouTubeTranscriptApi().list(video_id)  
+        
         transcript = None
         # 1) manually created caption in the desired language
         if pref:
@@ -66,7 +62,7 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
 def list_captions(video_id: str) -> List[str]:
     """List all available caption languages for a video."""
     try:
-        tr = YouTubeTranscriptApi.list_transcripts(video_id)
+        tr = YouTubeTranscriptApi().list(video_id)
         return [t.language_code for t in tr]
     except (NoTranscriptFound, TranscriptsDisabled, VideoUnavailable):
         return []
