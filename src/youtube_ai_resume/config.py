@@ -1,4 +1,4 @@
-"""
+r"""
 Centralised config handling for youtube-ai-resume.
 
 File location:

@@ -7,8 +7,7 @@ import os, pathlib, tempfile, time
 from typing import Optional
 
 from playsound import playsound
-from google.cloud import texttospeech
-
+from google.cloud import texttospeech # type: ignore[import]
 from .config import load
 
 import re

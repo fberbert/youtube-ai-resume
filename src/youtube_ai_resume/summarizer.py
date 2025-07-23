@@ -3,8 +3,8 @@ from openai import OpenAI
 from .config import load
 
 _cfg = load()
-DEFAULT_MODEL      = _cfg["openai_model"]
-DEFAULT_OUTPUT_LANG = _cfg["output_lang"]
+DEFAULT_MODEL      = _cfg.get("openai_model", "gpt-3.5-turbo")
+DEFAULT_OUTPUT_LANG = _cfg.get("output_lang", "en")
 
 SYSTEM_PROMPT = (
     "You are a professional note-taker. Produce a concise, insightful "
@@ -27,4 +27,5 @@ def summarize(
         ],
         temperature=0.3,
     )
-    return response.choices[0].message.content.strip()
+    content = response.choices[0].message.content or ""
+    return content.strip()
