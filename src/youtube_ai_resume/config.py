@@ -17,13 +17,17 @@ class YAIRConfig(TypedDict, total=False):
     google_credentials: str
     voice_enabled: bool
     default_voice: str
+    proxy_http: str
+    proxy_https: str
 
 DEFAULTS: YAIRConfig = {
     "openai_model": "gpt-4.1-mini",
     "output_lang": "en_US",
     "google_credentials": "~/.config/youtube-ai-resume/.google-credentials.json",
     "voice_enabled": False,
-    "default_voice": "en-US-Chirp-HD-D"
+    "default_voice": "en-US-Chirp-HD-D",
+    "proxy_http": "",
+    "proxy_https": ""
 }
 
 def _config_dir() -> Path:

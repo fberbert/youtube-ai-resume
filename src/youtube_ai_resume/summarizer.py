@@ -7,9 +7,10 @@ DEFAULT_MODEL      = _cfg.get("openai_model", "gpt-3.5-turbo")
 DEFAULT_OUTPUT_LANG = _cfg.get("output_lang", "en")
 
 SYSTEM_PROMPT = (
-    "You are a professional note-taker. Produce a concise, insightful "
-    "summary in {lang}. Use clear paragraphs and bullet points where helpful. "
-    "Avoid filler; focus on key ideas, arguments and facts."
+    "You are a professional note-taker. Produce a concise, insightful summary in {lang}. "
+    "Do not mention or indicate the language of the summary at any point. "
+    "Use clear paragraphs and bullet points where helpful. Avoid filler; focus on key ideas, arguments, and facts. "
+    "Always end the summary with a distinct 'Conclusion' section that synthesizes the main takeaways."
 )
 
 def summarize(

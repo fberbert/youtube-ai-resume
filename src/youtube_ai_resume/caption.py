@@ -2,10 +2,19 @@
 captions.py - support for auto-generated captions.
 """
 from __future__ import annotations
+
+import os
 from typing import List
 
 from youtube_transcript_api._api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import NoTranscriptFound, TranscriptsDisabled, VideoUnavailable
+
+# Proxy support: load config and prepare proxies dict if configured
+# Proxy support: load config and prepare proxy env vars if configured
+from .config import load as load_config
+cfg = load_config()
+proxy_http = cfg.get("proxy_http", "")
+proxy_https = cfg.get("proxy_https", "")
 
 
 def _snippet_to_text(chunk) -> str:
@@ -27,8 +36,28 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
       3. Any existing caption (manual or auto)
     """
     try:
-        transcripts = YouTubeTranscriptApi().list(video_id)  
-        
+        # Set proxy env vars only for this call if configured
+        orig_http = os.environ.get("HTTP_PROXY")
+        orig_https = os.environ.get("HTTPS_PROXY")
+        if proxy_http:
+            os.environ["HTTP_PROXY"] = proxy_http
+        if proxy_https:
+            os.environ["HTTPS_PROXY"] = proxy_https
+
+        transcripts = YouTubeTranscriptApi().list(video_id)
+
+        # Restore original env vars to avoid side effects
+        if proxy_http:
+            if orig_http is not None:
+                os.environ["HTTP_PROXY"] = orig_http
+            else:
+                del os.environ["HTTP_PROXY"]
+        if proxy_https:
+            if orig_https is not None:
+                os.environ["HTTPS_PROXY"] = orig_https
+            else:
+                del os.environ["HTTPS_PROXY"]
+
         transcript = None
         # 1) manually created caption in the desired language
         if pref:
@@ -62,7 +91,28 @@ def _best_transcript(video_id: str, pref: list[str] | None) -> str:
 def list_captions(video_id: str) -> List[str]:
     """List all available caption languages for a video."""
     try:
+        # Set proxy env vars only for this call if configured
+        orig_http = os.environ.get("HTTP_PROXY")
+        orig_https = os.environ.get("HTTPS_PROXY")
+        if proxy_http:
+            os.environ["HTTP_PROXY"] = proxy_http
+        if proxy_https:
+            os.environ["HTTPS_PROXY"] = proxy_https
+
         tr = YouTubeTranscriptApi().list(video_id)
+
+        # Restore original env vars to avoid side effects
+        if proxy_http:
+            if orig_http is not None:
+                os.environ["HTTP_PROXY"] = orig_http
+            else:
+                del os.environ["HTTP_PROXY"]
+        if proxy_https:
+            if orig_https is not None:
+                os.environ["HTTPS_PROXY"] = orig_https
+            else:
+                del os.environ["HTTPS_PROXY"]
+
         return [t.language_code for t in tr]
     except (NoTranscriptFound, TranscriptsDisabled, VideoUnavailable):
         return []

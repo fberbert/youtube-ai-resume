@@ -89,7 +89,41 @@ summary = summarizer.summarize(
 print(summary)
 ```
 
-## Configuration
+
+## Proxy Support (Optional)
+
+If you need to access YouTube or OpenAI via a proxy (for example, in cloud environments or to bypass IP restrictions), you can configure HTTP and HTTPS proxies in your config file.
+
+### How to configure
+
+Add the following fields to your `~/.config/youtube-ai-resume/config.json`:
+
+```json
+{
+  "proxy_http": "http://username:password@proxy_ip:proxy_port",
+  "proxy_https": "http://username:password@proxy_ip:proxy_port"
+}
+```
+
+**Example:**
+
+```json
+{
+  "proxy_http": "http://fabio:xxxx@187.84.229.156:3128",
+  "proxy_https": "http://fabio:xxxx@187.84.229.156:3128"
+}
+```
+
+If you do not need a proxy, simply leave these fields blank or omit them.
+
+**Design rationale:**
+- Proxy configuration is optional and does not affect local usage.
+- The format is compatible with standard Python libraries and environment variables (`HTTP_PROXY`, `HTTPS_PROXY`).
+- Credentials and port are included in the URL for authenticated proxies.
+
+**Security note:** Never share your proxy password publicly.
+
+---
 
 
 ## Voice narration (Text-to-Speech) [Optional]
