@@ -6,7 +6,7 @@ __all__ = ["summarize"]
 from .config import load
 
 _cfg = load()
-DEFAULT_MODEL      = _cfg.get("openai_model", "gpt-3.5-turbo")
+DEFAULT_MODEL      = _cfg.get("openai_model", "gpt-5-mini")
 DEFAULT_OUTPUT_LANG = _cfg.get("output_lang", "en")
 
 SYSTEM_PROMPT = (
@@ -30,7 +30,6 @@ def summarize(
             {"role": "system", "content": SYSTEM_PROMPT.format(lang=out_lang)},
             {"role": "user",   "content": transcript},
         ],
-        temperature=0.3,
     )
     content = response.choices[0].message.content or ""
     return content.strip()
