@@ -6,11 +6,18 @@ from rich.console import Console
 from .caption import fetch_caption
 from .summarizer import summarize
 from .config import load, YAIRConfig
-from .speech import speak
+from typing import Optional
 
 console = Console()
 
 cfg: YAIRConfig = load()
+
+try:
+    from .speech import speak  # type: ignore[import]
+    _speech_error: Optional[BaseException] = None
+except Exception as exc:  # pragma: no cover - defensive, import-time failure
+    speak = None  # type: ignore[assignment]
+    _speech_error = exc
 
 def extract_video_id(target: str) -> str:
     """
@@ -90,12 +97,21 @@ def app() -> None:
     console.print("\n[bold cyan]Summary:[/bold cyan]\n")
     console.print(textwrap.dedent(summary))
 
-    if args.voice or cfg.get("voice_enabled", False):
-        try:
-            console.print("\n[green]▶ Reproduzindo narração...[/green]")
-            speak(summary) # default voice and rate
-        except Exception as err:
-            console.print(f"[red]Narration failed: {err}[/red]")
+    wants_voice = args.voice or cfg.get("voice_enabled", False)
+
+    if wants_voice:
+        if speak is None:
+            hint = (
+                f"Narration unavailable: {_speech_error}"
+                if _speech_error else "Narration not installed."
+            )
+            console.print(f"[yellow]{hint}[/yellow]")
+        else:
+            try:
+                console.print("\n[green]▶ Reproduzindo narração...[/green]")
+                speak(summary) # default voice and rate
+            except Exception as err:
+                console.print(f"[red]Narration failed: {err}[/red]")
 
 if __name__ == "__main__":
     app()
